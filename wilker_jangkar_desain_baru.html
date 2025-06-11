@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>WILKER JANGKAR | Mesin Penghitung Penumpang</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        :root {
+            --tosca: #007166;
+            --wanita: #e91e63;
+            --laki: #2196f3;
+            --anak: #ff9800;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f4f4;
+            color: #333;
+            padding: 20px;
+            margin: 0;
+            text-align: center;
+        }
+        h1 {
+            color: var(--tosca);
+            margin-bottom: 10px;
+        }
+        .counter-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .counter-item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+        .counter-item.total {
+            background: var(--tosca);
+            color: white;
+            font-weight: bold;
+        }
+        .counter-label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .counter-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .action-buttons, .primary-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .circle-btn {
+            background: #eee;
+            border: none;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+        .wanita { color: var(--wanita); }
+        .laki { color: var(--laki); }
+        .anak { color: var(--anak); }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+        .wa {
+            background-color: #25d366;
+            color: white;
+        }
+        .reset-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>🛳️ WILKER JANGKAR</h1>
+    <p id="clock">Memuat waktu...</p>
+
+    <h2>Mesin Penghitung Penumpang Kapal</h2>
+
+    <div class="counter-container">
+        <div class="counter-item">
+            <span class="counter-label"><i class="fas fa-female" style="color: var(--wanita);"></i> Wanita</span>
+            <span class="counter-value" id="wanita">0</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-label"><i class="fas fa-male" style="color: var(--laki);"></i> Laki-laki</span>
+            <span class="counter-value" id="laki">0</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-label"><i class="fas fa-child" style="color: var(--anak);"></i> Anak-anak</span>
+            <span class="counter-value" id="anak">0</span>
+        </div>
+        <div class="counter-item total">
+            <span>Total Penumpang</span>
+            <span id="total">0</span>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button class="circle-btn wanita" onclick="tambah('wanita')"><i class="fas fa-female"></i><span>Wanita</span></button>
+        <button class="circle-btn laki" onclick="tambah('laki')"><i class="fas fa-male"></i><span>Laki</span></button>
+        <button class="circle-btn anak" onclick="tambah('anak')"><i class="fas fa-child"></i><span>Anak</span></button>
+    </div>
+
+    <div class="primary-buttons">
+        <button class="btn wa" onclick="kirimWhatsApp()"><i class="fab fa-whatsapp"></i> Kirim ke WhatsApp</button>
+        <button class="btn reset-btn" onclick="resetData()"><i class="fas fa-redo"></i> Reset</button>
+    </div>
+
+    <footer>© 2025 Shariang Production | Wilker Jangkar</footer>
+
+    <script>
+        let counts = { wanita: 0, laki: 0, anak: 0 };
+        function tambah(kategori) {
+            counts[kategori]++;
+            document.getElementById(kategori).textContent = counts[kategori];
+            updateTotal();
+        }
+        function resetData() {
+            counts = { wanita: 0, laki: 0, anak: 0 };
+            document.getElementById("wanita").textContent = 0;
+            document.getElementById("laki").textContent = 0;
+            document.getElementById("anak").textContent = 0;
+            updateTotal();
+        }
+        function updateTotal() {
+            const total = counts.wanita + counts.laki + counts.anak;
+            document.getElementById("total").textContent = total;
+        }
+        function kirimWhatsApp() {
+            const message = `Jumlah Penumpang:
+Wanita: ${counts.wanita}
+Laki-laki: ${counts.laki}
+Anak-anak: ${counts.anak}
+Total: ${counts.wanita + counts.laki + counts.anak}`;
+            const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+        setInterval(() => {
+            const now = new Date();
+            const jam = now.toLocaleTimeString();
+            document.getElementById("clock").textContent = jam;
+        }, 1000);
+    </script>
+</body>
+</html>
