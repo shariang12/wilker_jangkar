@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>WILKER JANGKAR | Mesin Penghitung Penumpang</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0fdfa;
+            color: #333;
+            padding: 20px;
+            margin: 0;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #007166;
+        }
+        .counter-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .counter-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 1.2em;
+        }
+        .counter-item.total {
+            font-weight: bold;
+            border-top: 1px solid #ccc;
+            margin-top: 10px;
+            padding-top: 15px;
+        }
+        .action-buttons, .primary-buttons {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+        .circle-btn, .btn {
+            flex: 1 1 30%;
+            margin: 10px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .wanita { background-color: #e91e63; color: #fff; }
+        .laki { background-color: #2196f3; color: #fff; }
+        .anak { background-color: #ff9800; color: #fff; }
+        .wa { background-color: #25D366; color: #fff; }
+        .reset-btn { background-color: #f44336; color: #fff; }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🛳️ WILKER JANGKAR</h1>
+    <h2>Memuat waktu...</h2>
+
+    <div class="counter-container">
+        <div class="counter-item">
+            <span class="counter-label"><i class="fas fa-female"></i> Wanita</span>
+            <span class="counter-value" id="wanita">0</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-label"><i class="fas fa-male"></i> Laki-laki</span>
+            <span class="counter-value" id="laki">0</span>
+        </div>
+        <div class="counter-item">
+            <span class="counter-label"><i class="fas fa-child"></i> Anak-anak</span>
+            <span class="counter-value" id="anak">0</span>
+        </div>
+        <div class="counter-item total">
+            <span>Total Penumpang</span>
+            <span id="total">0</span>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button class="circle-btn wanita" onclick="tambah('wanita')"><i class="fas fa-female"></i> Wanita</button>
+        <button class="circle-btn laki" onclick="tambah('laki')"><i class="fas fa-male"></i> Laki</button>
+        <button class="circle-btn anak" onclick="tambah('anak')"><i class="fas fa-child"></i> Anak</button>
+    </div>
+
+    <div class="primary-buttons">
+        <button class="btn wa" onclick="kirimWhatsApp()"><i class="fab fa-whatsapp"></i> Kirim ke WhatsApp</button>
+        <button class="btn reset-btn" onclick="resetData()"><i class="fas fa-redo"></i> Reset</button>
+    </div>
+
+    <footer>© 2025 Shariang Production | Wilker Jangkar</footer>
+
+    <script>
+        let counts = { wanita: 0, laki: 0, anak: 0 };
+
+        function tambah(jenis) {
+            counts[jenis]++;
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('wanita').innerText = counts.wanita;
+            document.getElementById('laki').innerText = counts.laki;
+            document.getElementById('anak').innerText = counts.anak;
+            document.getElementById('total').innerText = counts.wanita + counts.laki + counts.anak;
+        }
+
+        function resetData() {
+            counts = { wanita: 0, laki: 0, anak: 0 };
+            updateUI();
+        }
+
+        function kirimWhatsApp() {
+            const pesan = `Total Penumpang:
+Wanita: ${counts.wanita}
+Laki-laki: ${counts.laki}
+Anak-anak: ${counts.anak}
+Total: ${counts.wanita + counts.laki + counts.anak}`;
+            const url = `https://wa.me/?text=${encodeURIComponent(pesan)}`;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
